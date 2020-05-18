@@ -39,9 +39,10 @@
 
 每个样本是2600维的光谱序列数据。每个类别随机选取了部分数据进行可视化，以star类和galaxy类为例：
 
-<img src="star.png" style="zoom:70%;" />
+![star](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhd258wj30hs0dc756.jpg)
 
 <img src="galaxy.png" style="zoom:70%;" />
+![galaxy](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewufhxnc1j30hs0dc3zk.jpg)
 
 ### （一）归一化
 
@@ -52,11 +53,11 @@ $$
 y=\frac{x}{\sqrt{\sum_{i=1}^nx_i^2}}
 $$
 
- 归一化后的效果（以star类和galaxy类为例）：
+归一化后的效果（以star类和galaxy类为例）：
 
-<img src="star_standardized.png" style="zoom:70%;" />
+![star_stand](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhcud3dj30hs0dcabb.jpg)
 
-<img src="galaxy_standardized.png" style="zoom:70%;" />
+![galaxy_stand](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhe5l74j30hs0dcq3f.jpg)
 
 归一化前不同光谱的流量不在同一数量级，归一化后不同光谱的流量统一，归一化有利于卷积神经网络更快速地学习不同天体光谱之间的特征差异，使神经网络关注的重点不包含流量因素，有利于神经网络训练速度加快、精度提升。
 
@@ -80,7 +81,8 @@ x_{noise} = x+L\times s\times k
 $$
 其中x_noise是加噪的光谱数据，x是原始的光谱数据，L是标准正态分布随机数，s是原始光谱的标准偏差，k是实验得到的折减系数，我们最终取值为k=0.2。
 
-<img src="ratio1.png" style="zoom:50%;" /><img src="ratio2.png" alt="ratio2" style="zoom:50%;" />
+![ratio1](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhdbdxhj30d50b7dfz.jpg)
+![ratio2](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhcjqlxj30cu0bhjrj.jpg)
 
 原始训练数据是一个明显的类别不平衡问题。因此在数据增强时，我们有意针对小类别（qso和galaxy）增强更多的样本，来平衡各个类别的数量。上图战术了原始数据集和增强后数据集各类别占比情况，最终增强后三个类别的数量比约为3:1:1，经过实验发现，如下图所示，在单CNN模型上使用增强后的数据集进行训练相较于原始数据集训练过程更加稳定，波动更小，最终收敛后的macro-F1 score得到提升。使用数据增强的另一个优势是模型融合时对不同增强比例的数据集训练可以提供多种差异化的模型，从而显著提升模型融合的效果。
 
@@ -104,7 +106,7 @@ $$
 
 我们对光谱数据归一化之后进行简单可视化发现，不同类别的光谱数据在趋势上具有较明显的区别。考虑光谱数据具有的局部性，采用一维卷积神经网络模型，取得了较好的效果。为提取光谱数据中具有的不同尺度的特征，模型采用[3, 5, 7, 9, 11, 13, 15]不同大小的卷积核进行卷积，并拼接为一维向量输入全连接层。
 
-<img src="cnn.png" style="zoom:80%;" />
+![cnn_aug](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewug3d682j30z90ccaaw.jpg)
 
 考虑过拟合问题，我们先后采用了DropOut和Batch Normalization，实验DropOut层时发现验证集表现依赖于DropOut层中dropout rate该参数，为避免过多超参数难以寻找最佳组合，我们改用Batch Normalization，模型收敛速度明显加快，效果得到有效提升。
 
@@ -141,8 +143,7 @@ def ConvNet_BN(input_shape=(2600, 1, 1), classes=3) -> Model:
 
 该网络模型在原数据集上和数据增强后的数据集上训练后，验证集上macro f1随epoch变化如图：
 
-<img src="cnn_aug.png" style="zoom:80%;" />
-
+![cnn_aug](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewufhxnc1j30hs0dc3zk.jpg)
 
 
 ## 六、最终方案
