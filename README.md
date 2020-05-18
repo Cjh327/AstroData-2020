@@ -41,8 +41,7 @@
 
 ![star](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhd258wj30hs0dc756.jpg)
 
-<img src="galaxy.png" style="zoom:70%;" />
-![galaxy](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewufhxnc1j30hs0dc3zk.jpg)
+![galaxy](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewuhdu4eij30hs0dcaaz.jpg)
 
 ### （一）归一化
 
