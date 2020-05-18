@@ -105,7 +105,7 @@ $$
 
 我们对光谱数据归一化之后进行简单可视化发现，不同类别的光谱数据在趋势上具有较明显的区别。考虑光谱数据具有的局部性，采用一维卷积神经网络模型，取得了较好的效果。为提取光谱数据中具有的不同尺度的特征，模型采用[3, 5, 7, 9, 11, 13, 15]不同大小的卷积核进行卷积，并拼接为一维向量输入全连接层。
 
-![cnn_aug](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewug3d682j30z90ccaaw.jpg)
+![cnn](https://tva1.sinaimg.cn/large/007S8ZIlgy1gewug3d682j30z90ccaaw.jpg)
 
 考虑过拟合问题，我们先后采用了DropOut和Batch Normalization，实验DropOut层时发现验证集表现依赖于DropOut层中dropout rate该参数，为避免过多超参数难以寻找最佳组合，我们改用Batch Normalization，模型收敛速度明显加快，效果得到有效提升。
 
